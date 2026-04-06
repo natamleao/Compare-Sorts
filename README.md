@@ -73,12 +73,12 @@ executionTimePrint(executionTimeBubbleSort);
 Formato de saída:
 
 ```text
-Bubble Sort           - Tempo de execução: 0 H : 0 M : 3 S : 542 ms
-Insertion Sort        - Tempo de execução: 0 H : 0 M : 0 S : 124 ms
-Optimized Bubble Sort - Tempo de execução: 0 H : 0 M : 0 S : 110 ms
-Selection Sort        - Tempo de execução: 0 H : 0 M : 0 S : 200 ms
-Merge Sort            - Tempo de execução: 0 H : 0 M : 0 S : 10 ms
-Quick Sort            - Tempo de execução: 0 H : 0 M : 0 S : 9 ms
+Bubble Sort           - Tempo de execução: 361.624544 ms
+Insertion Sort        - Tempo de execução: 76.949429 ms
+Optimized Bubble Sort - Tempo de execução: 364.714845 ms
+Selection Sort        - Tempo de execução: 211.061148 ms
+Merge Sort            - Tempo de execução: 1.451690 ms
+Quick Sort            - Tempo de execução: 0.859636 ms
 ```
 
 > Observação: valores variam conforme o tamanho do array e hardware.
