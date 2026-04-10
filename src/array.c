@@ -33,7 +33,6 @@ int structureArrayGetSize(StructureArray *array){return array->_size;}
 void structureArraySet(StructureArray *array, int index, float value){array->_data[index] = value;}
 float structureArrayGet(StructureArray *array, int index){return array->_data[index];}
 
-
 void structureArrayPrint(StructureArray *array){
     float *data = structureArrayGetData(array);
     int size = structureArrayGetSize(array);

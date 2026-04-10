@@ -1,5 +1,6 @@
 #include "../include/sorts.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /******************************************************* INTERFACE PRIVADA *******************************************************/
 
@@ -7,7 +8,7 @@ void merge(float array[], int begin, int middle, int end){
     int cont1 = begin;
     int cont2 = (middle + 1);
     int contAux = 0;
-    int arrAux[end - begin + 1];
+    float *arrAux = malloc((end - begin + 1) * sizeof(float));
 
     while(cont1 <= middle && cont2 <= end){
         if(array[cont1] <array[cont2]){
@@ -34,8 +35,10 @@ void merge(float array[], int begin, int middle, int end){
         cont2++;
     }
 
-    for(contAux = begin; contAux < end; contAux++)
+    for(contAux = begin; contAux <= end; contAux++)
         array[contAux] = arrAux[contAux-begin];
+
+    free(arrAux);
 }
 
 void mergeSortRecursive(float array[], int begin, int end){
@@ -81,120 +84,70 @@ void quickSortRecursive(float array[], int low, int high){
 
 /******************************************************* INTERFACE PUBLICA *******************************************************/
 
-void bubbleSort(StructureArray *array){
-    float *data = structureArrayGetData(array);
-    int size = structureArrayGetSize(array);
-
+void bubbleSort(float *array, int size){
     for(int i = 0; i < size - 1; i++){
-        for(int j = 0; j < size - 1; j++){
-            if(data[j] > data[j+1]){
-                float aux = data[j];
-                data[j] = data[j+1];
-                data[j+1] = aux;
+        for(int j = 0; j < size - 1 - i; j++){
+            if(array[j] > array[j+1]){
+                float aux = array[j];
+                array[j] = array[j+1];
+                array[j+1] = aux;
             }
         }
     }
 }
 
-void insertionSort(StructureArray *array){
-    float *data = structureArrayGetData(array);
-    int size = structureArrayGetSize(array);
-
+void insertionSort(float *array, int size){
     for(int i = 1; i < size; i++){
-        float key = data[i];
+        float key = array[i];
         int j = i - 1;
 
-        while(j >= 0 && data[j] > key){
-            data[j + 1] = data[j];
+        while(j >= 0 && array[j] > key){
+            array[j + 1] = array[j];
             j--;
         }
 
-        data[j + 1] = key;
+        array[j + 1] = key;
     }
 }
 
-void mergeSort(StructureArray *array){
-    float *data = structureArrayGetData(array);
-    int size = structureArrayGetSize(array);
-
-    mergeSortRecursive(data, 0, size - 1);
+void mergeSort(float *array, int size){
+    mergeSortRecursive(array, 0, size - 1);
 }
 
-void optimizedBubbleSort(StructureArray *array){
-    float *data = structureArrayGetData(array);
-    int size = structureArrayGetSize(array);
+void optimizedBubbleSort(float *array, int size){
     int ok = 0;
 
     for(int i = 0; i < size - 1 && ok == 0; i++){
         ok = 1;
-        for(int j = 0; j < size - 1; j++){
-            if(data[j] > data[j+1]){
+        for(int j = 0; j < size - 1 - i; j++){
+            if(array[j] > array[j+1]){
                 ok = 0;
-                float aux = data[j];
-                data[j] = data[j+1];
-                data[j+1] = aux;
+                float aux = array[j];
+                array[j] = array[j+1];
+                array[j+1] = aux;
             }
         }
     }
 }
 
-void quickSort(StructureArray *array){
-    float *data = structureArrayGetData(array);
-    int size = structureArrayGetSize(array);
-
-    quickSortRecursive(data, 0, size - 1);
+void quickSort(float *array, int size){
+    quickSortRecursive(array, 0, size - 1);
 }
 
-void selectionSort(StructureArray *array){
-    float *data = structureArrayGetData(array);
-    int size = structureArrayGetSize(array);
-
+void selectionSort(float *array, int size){
     int min; 
     float temp;
 
     for(int i = 0; i < size - 1; i++){
         min = i;
-        for(int j = 0; j < size; j++){
-            if(data[j] < data[min])
+        for(int j = i + 1; j < size; j++){
+            if(array[j] < array[min])
                 min = j;
         }
 
-        temp = data[min];
-        data[min] = data[i];
-        data[i]= temp;
-    }
-}
-
-void sortWrapper(void *a, int f){
-    switch(f){
-        case 1:
-            bubbleSort((StructureArray*)a);
-            break;
-        
-        case 2:
-            insertionSort((StructureArray*)a);
-            break;
-
-        case 3:
-            mergeSort((StructureArray*)a);
-            break;
-        
-        case 4:
-            optimizedBubbleSort((StructureArray*)a);
-            break;
-
-        case 5:
-            quickSort((StructureArray*)a);
-            break;
-
-        case 6:
-            selectionSort((StructureArray*)a);
-            break;
-
-        default:
-            printf("+ Opção inválida (%d não é o código de nenhum sort)\n", f);
-            printf("+------------------------------------------------------------------+\n");
-            break;
+        temp = array[min];
+        array[min] = array[i];
+        array[i]= temp;
     }
 }
 

@@ -3,25 +3,30 @@
 #ifndef CALCULATE_TIME_H
 #define CALCULATE_TIME_H
 
-/**
- * @brief Mede o tempo de execução de uma função que atua sobre uma estrutura genérica.
- *
- * @param function Ponteiro para a função a ser executada. Deve receber um parâmetro `void*` e não retornar valor.
- * @param data Ponteiro para a estrutura sobre a qual a função irá atuar.
- * @param f Flag para saber qual função deve ser chamada.
- * 
- * @return Tempo de execução da função em segundos (tipo `double`).
- *
- * @note Usa clock_gettime com CLOCK_MONOTONIC (tempo real de alta precisão).
- */
-double executionTimeCalculate(void (*function)(void *, int), void *data, int f);
+#include "sorts.h"
 
 /**
- * @brief Imprime o tempo de execução em horas, minutos, segundos e milissegundos.
+ * @brief Mede o tempo médio de execução de uma função de ordenação.
+ * 
+ * @param function Ponteiro para função que recebe (float*, int).
+ * @param array Vetor de float que será ordenado.
+ * @param size Tamanho do vetor.
+ * 
+ * @return Tempo médio de execução em nanosegundos.
+ * 
+ * @details A função executa o algoritmo múltiplas vezes sobre cópias do array original,
+ * evitando efeitos colaterais e garantindo uma média mais estável do tempo de execução.
+ * 
+ * @note Usa clock_gettime com CLOCK_MONOTONIC (tempo real de alta precisão).
+ */
+double benchmarkExecutionTime(void (*function)(float*, int), float *array, int size);
+
+/**
+ * @brief Imprime o tempo de execução formatado em milissegundos.
  *
- * @param executionTime Tempo total em segundos (tipo `double`).
+ * @param executionTime Tempo total em nanosegundos.
  *
- * @note A função apenas imprime o resultado na tela; não retorna nenhum valor.
+ * @details Converte o tempo de nanosegundos para milissegundos e exibe na saída padrão.
  */
 void executionTimePrint(double executionTime);
 
