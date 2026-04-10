@@ -101,8 +101,6 @@ void selectionSort(StructureArray *array);
  *
  * @param a Ponteiro para a estrutura `Array` (passado como `void*` para compatibilidade).
  * @param f Flag para saber qual função deve ser chamada.
- *
- * @note Usado principalmente com funções como `executionTimeCalculate` que aceitam `void*`.
  */
 void sortWrapper(void *a, int f);
 
