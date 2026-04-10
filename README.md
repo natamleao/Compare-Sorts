@@ -43,11 +43,7 @@ Isso permite melhor organização e controle de memória.
 
 Para cada teste:
 
-- Um conjunto de valores aleatórios é gerado no intervalo:
-```
-[-1e6, 1e6]
-
-```
+- Um conjunto de valores aleatórios é gerado no intervalo: ```[-1e6, 1e6]```
 - Os mesmos valores são copiados para todos os algoritmos
 
 Isso garante que todos ordenem exatamente o mesmo dataset.
