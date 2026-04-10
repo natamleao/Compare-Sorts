@@ -71,7 +71,7 @@ Características:
 Cada algoritmo:
 
 1. Recebe uma cópia do *array* original
-2. É executado **4 vezes**
+2. É executado **100 vezes**
 3. O tempo médio é calculado
 
 ```c
