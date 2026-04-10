@@ -11,6 +11,7 @@
  * @param function Ponteiro para função que recebe (float*, int).
  * @param array Vetor de float que será ordenado.
  * @param size Tamanho do vetor.
+ * @param nIterations Número de execuções do algoritmo de ordenação.
  * 
  * @return Tempo médio de execução em nanosegundos.
  * 
@@ -19,7 +20,7 @@
  * 
  * @note Usa clock_gettime com CLOCK_MONOTONIC (tempo real de alta precisão).
  */
-double benchmarkExecutionTime(void (*function)(float*, int), float *array, int size);
+double benchmarkExecutionTime(void (*function)(float*, int), float *array, int size, int nIterations);
 
 /**
  * @brief Imprime o tempo de execução formatado em milissegundos.

@@ -53,21 +53,19 @@ void calculateTime(void (*function)(float*, int), float *array, int size, double
 
 /******************************************************* INTERFACE PUBLICA *******************************************************/
 
-double benchmarkExecutionTime(void (*function)(float*, int), float *array, int size){
-    int n_times = 4;
-
-    float **m = allocMatrix(n_times, size);
+double benchmarkExecutionTime(void (*function)(float*, int), float *array, int size, int nIterations){
+    float **m = allocMatrix(nIterations, size);
     
-    copyData(m, array, n_times, size);
+    copyData(m, array, nIterations, size);
 
     double sum = 0.0;
 
-    for(int i = 0; i < n_times; i++)
+    for(int i = 0; i < nIterations; i++)
         calculateTime(function, m[i], size, &sum);
 
-    destroyMatrix(m, n_times);
+    destroyMatrix(m, nIterations);
 
-    return sum / n_times;
+    return sum / nIterations;
 }
 
 void executionTimePrint(double executionTime){
