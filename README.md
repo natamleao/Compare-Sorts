@@ -1,4 +1,4 @@
-# *Compare-Sorts*
+# Compare-Sorts
 
 ![Language](https://img.shields.io/badge/language-C-blue)
 ![Standard](https://img.shields.io/badge/standard-C11-orange)
@@ -11,77 +11,90 @@
 
 ## Visão geral
 
-Este projeto implementa e compara diversos algoritmos de ordenação em **C**, utilizando uma **biblioteca única** que contém todas as implementações.  
+Este projeto implementa e compara diversos algoritmos de ordenação em **C**, com foco em **medição de desempenho real**.
 
-O objetivo é **comparar desempenho real** de cada algoritmo sobre os mesmos conjuntos de dados aleatórios.  
-
-Algoritmos implementados:
-
-* Bubble Sort
-* Optimized Bubble Sort
-* Insertion Sort
-* Selection Sort
-* Merge Sort
-* Quick Sort
+Os algoritmos são executados múltiplas vezes sobre cópias idênticas dos dados, garantindo uma comparação **justa e consistente**.
 
 ---
 
-## Estruturas utilizadas
+## Algoritmos implementados
 
-Todos os algoritmos trabalham sobre uma **estrutura `StructureArray`**, que encapsula um array de `float` dinâmico.  
-O mesmo conjunto de valores é usado em todos os algoritmos, garantindo **comparação justa**.
-
----
-
-## Algoritmos
-
-### Bubble Sort
-* Troca repetidamente elementos adjacentes se estiverem fora de ordem
-* Complexidade: O(n²)
-
-### Optimized Bubble Sort
-* Variante que interrompe se nenhuma troca foi feita em uma passada
-* Complexidade: O(n²), mas mais eficiente em arrays quase ordenados
-
-### Insertion Sort
-* Insere cada elemento na posição correta em relação aos anteriores
-* Complexidade: O(n²), eficiente apenas para arrays pequenos
-
-### Selection Sort
-* Seleciona o menor elemento da parte não ordenada e troca com a posição atual
-* Complexidade: O(n²)
-
-### Merge Sort
-* Divide e conquista, combinando subarrays ordenados
-* Complexidade: O(n log n)
-
-### Quick Sort
-* Seleciona um pivô, particiona o array e aplica recursão
-* Complexidade média: O(n log n), pior caso: O(n²)
+- *Bubble Sort*  
+- *Optimized Bubble Sort*  
+- *Insertion Sort*  
+- *Selection Sort*  
+- *Merge Sort*  
+- *Quick Sort*  
 
 ---
 
-## Medição de tempo
+## Estrutura de dados
 
-Foi utilizado `clock_gettime` com `CLOCK_MONOTONIC` para medir o tempo de execução de cada algoritmo:
+Todos os algoritmos operam sobre uma estrutura dinâmica chamada `StructureArray`, que encapsula:
+
+- Ponteiro para dados (`float*`)
+- Tamanho do *array*
+
+Isso permite melhor organização e controle de memória.
+
+---
+
+## Geração de dados
+
+Para cada teste:
+
+- Um conjunto de valores aleatórios é gerado no intervalo:
+```
+[-1e6, 1e6]
+
+```
+- Os mesmos valores são copiados para todos os algoritmos
+
+Isso garante que todos ordenem exatamente o mesmo dataset.
+
+---
+
+## *Benchmark*
+
+A medição de tempo é feita utilizando:
 
 ```c
-double executionTimeBubbleSort = executionTimeCalculate(sortWrapper, arrayBubble, BS);
-executionTimePrint(executionTimeBubbleSort);
+clock_gettime(CLOCK_MONOTONIC, ...)
 ````
 
-Formato de saída:
+Características:
 
-```text
-Bubble Sort           - Tempo de execução: 361.624544 ms
-Insertion Sort        - Tempo de execução: 76.949429  ms
-Optimized Bubble Sort - Tempo de execução: 364.714845 ms
-Selection Sort        - Tempo de execução: 211.061148 ms
-Merge Sort            - Tempo de execução: 1.451690   ms
-Quick Sort            - Tempo de execução: 0.859636   ms
+* Alta precisão (nanosegundos)
+* Tempo real (não CPU time)
+* Independente de alterações do sistema
+
+---
+
+## Metodologia
+
+Cada algoritmo:
+
+1. Recebe uma cópia do *array* original
+2. É executado **4 vezes**
+3. O tempo médio é calculado
+
+```c
+double time = benchmarkExecutionTime(bubbleSort, data, size);
+executionTimePrint(time);
 ```
 
-> Observação: valores variam conforme o tamanho do array e hardware.
+---
+
+## Saída
+
+Formato típico:
+
+```text
++ Bubble Sort - Tempo de execução: 361.624544 ms
++ Insertion Sort - Tempo de execução: 76.949429 ms
++ Merge Sort - Tempo de execução: 1.451690 ms
++ Quick Sort - Tempo de execução: 0.859636 ms
+```
 
 ---
 
@@ -145,13 +158,15 @@ make run
 make clean
 make cleanapp
 ```
+
 ---
 
 ## Observações
 
-* Todos os algoritmos recebem exatamente os mesmos valores aleatórios
-* Facilita **comparação direta de desempenho**
-* Merge Sort e Quick Sort escalam melhor para arrays grandes, enquanto os O(n²) são mais lentos
+* Todos os algoritmos recebem os mesmos dados
+* O benchmark usa múltiplas execuções para reduzir ruído
+* Algoritmos O(n log n) escalam muito melhor para grandes entradas
+* Algoritmos O(n²) tornam-se inviáveis para grandes volumes
 
 ---
 
