@@ -28,7 +28,7 @@ Algoritmos implementados:
 
 ## Estruturas utilizadas
 
-Todos os algoritmos trabalham sobre uma **estrutura `StructureArray`**, que encapsula um array de `float` dinâmico.  
+Todos os algoritmos trabalham sobre uma **estrutura** `StructureArray`, que encapsula um array de `float` dinâmico.  
 O mesmo conjunto de valores é usado em todos os algoritmos, garantindo **comparação justa**.
 
 ---
