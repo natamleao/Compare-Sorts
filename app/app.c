@@ -6,7 +6,7 @@
 #include <time.h>
 
 #define MAX_TESTS 7
-#define N_ITERATIONS 100
+#define NUM_RUNS 100
 
 void runTest(FILE *file, const char *name, void (*sort)(float*, int), StructureArray *structure, int length, int isLast);
 
@@ -84,7 +84,7 @@ int main(){
 }
 
 void runTest(FILE *file, const char *name, void (*sort)(float*, int), StructureArray *structure, int length, int isLast){
-    Result *r = benchmarkExecutionTime(sort, structureArrayGetData(structure), length, N_ITERATIONS);
+    Result *r = benchmarkExecutionTime(sort, structureArrayGetData(structure), length, NUM_RUNS);
 
     if(isLast)
         fprintf(file, "%.6f,%.6f\n", resultGetMean(r), resultGetStddev(r));
