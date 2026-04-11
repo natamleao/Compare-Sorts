@@ -75,7 +75,7 @@ int main(){
         structureArrayDestroy(arrayQuick);
         printf("+------------------------------------------------------------------+\n");
 
-        double executionTimeSelectionSort = benchmarkExecutionTime(selectionSort, structureArrayGetData(arraySelection), structureArrayGetSize(arraySelection), N_ITERATIONS);
+        double executionTimeSelectionSort = benchmarkExecutionTime(selectionSort, structureArrayGetData(arraySelection), size, N_ITERATIONS);
         printf("+ Selection Sort - ");
         //structureArrayPrint(arraySelection);
         executionTimePrint(executionTimeSelectionSort);
