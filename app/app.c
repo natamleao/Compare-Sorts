@@ -84,16 +84,16 @@ int main(){
 }
 
 void runTest(FILE *file, const char *name, void (*sort)(float*, int), StructureArray *structure, int length, int isLast){
-    Result *r = benchmarkExecutionTime(sort, structureArrayGetData(structure), length, NUM_RUNS);
+    Result *res = benchmarkExecutionTime(sort, structureArrayGetData(structure), length, NUM_RUNS);
 
     if(isLast)
-        fprintf(file, "%.6f,%.6f\n", resultGetMean(r), resultGetStddev(r));
+        fprintf(file, "%.6f,%.6f\n", resultGetMean(res), resultGetStddev(res));
     else
-        fprintf(file, "%.6f,%.6f,", resultGetMean(r), resultGetStddev(r));
+        fprintf(file, "%.6f,%.6f,", resultGetMean(res), resultGetStddev(res));
 
     printf("+ %s - ", name);
-    executionTimePrint(r);
+    executionTimePrint(res);
 
     structureArrayDestroy(structure);
-    resultDestroy(r);
+    resultDestroy(res);
 }
