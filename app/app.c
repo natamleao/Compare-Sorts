@@ -16,18 +16,19 @@ int main(){
     printf("+------------------------ Testes iniciados ------------------------+\n");
 
     for(int i = 0; i < MAX_TESTS; i++){
+        int size = tests[i];
         printf("+------------------------------------------------------------------+\n");
-        printf("+ Teste nº: %d | Tamanho da entrada: %d\n", i+1, tests[i]);
+        printf("+ Teste nº: %d | Tamanho da entrada: %d\n", i+1, size);
         printf("+------------------------------------------------------------------+\n");
-        StructureArray *arrayInsertion = structureArrayCreate(tests[i]);
-        StructureArray *arrayBubble = structureArrayCreate(tests[i]);
-        StructureArray *arrayOptimizedBubble = structureArrayCreate(tests[i]);
-        StructureArray *arraySelection = structureArrayCreate(tests[i]);
-        StructureArray *arrayQuick = structureArrayCreate(tests[i]);
-        StructureArray *arrayMerge = structureArrayCreate(tests[i]);
+        StructureArray *arrayInsertion = structureArrayCreate(size);
+        StructureArray *arrayBubble = structureArrayCreate(size);
+        StructureArray *arrayOptimizedBubble = structureArrayCreate(size);
+        StructureArray *arraySelection = structureArrayCreate(size);
+        StructureArray *arrayQuick = structureArrayCreate(size);
+        StructureArray *arrayMerge = structureArrayCreate(size);
 
         srand(time(NULL));
-        for(int j = 0; j < tests[i]; j++){
+        for(int j = 0; j < size; j++){
             float min = -1e6f;
             float max =  1e6f;
             float value = min + ((float)rand() / RAND_MAX) * (max - min);
@@ -39,35 +40,35 @@ int main(){
             structureArraySet(arrayMerge, j, value);
         }
 
-        double executionTimeBubbleSort = benchmarkExecutionTime(bubbleSort, structureArrayGetData(arrayBubble), structureArrayGetSize(arrayBubble), N_ITERATIONS);
+        double executionTimeBubbleSort = benchmarkExecutionTime(bubbleSort, structureArrayGetData(arrayBubble), size, N_ITERATIONS);
         printf("+ Bubble Sort - ");
         //structureArrayPrint(arrayBubble);
         executionTimePrint(executionTimeBubbleSort);
         structureArrayDestroy(arrayBubble);
         printf("+------------------------------------------------------------------+\n");
 
-        double executionTimeInsertionSort = benchmarkExecutionTime(insertionSort, structureArrayGetData(arrayInsertion), structureArrayGetSize(arrayInsertion), N_ITERATIONS);
+        double executionTimeInsertionSort = benchmarkExecutionTime(insertionSort, structureArrayGetData(arrayInsertion), size, N_ITERATIONS);
         printf("+ Insertion Sort - ");
         //structureArrayPrint(arrayInsertion);
         executionTimePrint(executionTimeInsertionSort);
         structureArrayDestroy(arrayInsertion);
         printf("+------------------------------------------------------------------+\n");
 
-        double executionTimeMergeSort = benchmarkExecutionTime(mergeSort, structureArrayGetData(arrayMerge), structureArrayGetSize(arrayMerge), N_ITERATIONS);
+        double executionTimeMergeSort = benchmarkExecutionTime(mergeSort, structureArrayGetData(arrayMerge), size, N_ITERATIONS);
         printf("+ Merge Sort - ");
         //structureArrayPrint(arrayMerge);
         executionTimePrint(executionTimeMergeSort);
         structureArrayDestroy(arrayMerge);
         printf("+------------------------------------------------------------------+\n");
     
-        double executionTimeOptimizedBubbleSort = benchmarkExecutionTime(optimizedBubbleSort, structureArrayGetData(arrayOptimizedBubble), structureArrayGetSize(arrayOptimizedBubble), N_ITERATIONS);
+        double executionTimeOptimizedBubbleSort = benchmarkExecutionTime(optimizedBubbleSort, structureArrayGetData(arrayOptimizedBubble), size, N_ITERATIONS);
         printf("+ Optimized Bubble Sort - ");
         //structureArrayPrint(arrayOptimizedBubble);
         executionTimePrint(executionTimeOptimizedBubbleSort);
         structureArrayDestroy(arrayOptimizedBubble);
         printf("+------------------------------------------------------------------+\n");
 
-        double executionTimeQuickSort = benchmarkExecutionTime(quickSort, structureArrayGetData(arrayQuick), structureArrayGetSize(arrayQuick), N_ITERATIONS);
+        double executionTimeQuickSort = benchmarkExecutionTime(quickSort, structureArrayGetData(arrayQuick), size, N_ITERATIONS);
         printf("+ Quick Sort - ");
         //structureArrayPrint(arrayQuick);
         executionTimePrint(executionTimeQuickSort);
