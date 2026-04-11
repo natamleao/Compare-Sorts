@@ -39,7 +39,7 @@ Para cada tamanho de entrada:
    - **Desvio padrão (stddev)**
    - **Coeficiente de variação (CV)**
 
-> Para os algoritmos menos eficientes (*Bubble*, *Optimized Bubble*, *Insertion* e *Selection Sort*), a execução é controlada a entradas com tamanho menor (até 20000), escalando somentes para os mais eficientes (*Merge* e *Quick Sort*),
+> Para os algoritmos menos eficientes (*Bubble*, *Optimized Bubble*, *Insertion* e *Selection Sort*), a execução é controlada a entradas com tamanho menor (até 200000), escalando somentes para os mais eficientes (*Merge* e *Quick Sort*),
 
 ---
 
