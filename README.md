@@ -39,6 +39,8 @@ Para cada tamanho de entrada:
    - **Desvio padrão (stddev)**
    - **Coeficiente de variação (CV)**
 
+> Para os algoritmos menos eficientes, a execução é controla a um número menor de entradas, escalando somentes para os mais eficientes (*Merge* e *Quick Sort*),
+
 ---
 
 ## Ambiente de execução
