@@ -10,7 +10,7 @@
 
 ## Visão geral
 
-Este projeto implementa e compara algoritmos de ordenação em **C**, com foco em **benchmark real e análise estatística de desempenho**.
+Este projeto implementa e compara algoritmos de ordenação em **C**, com foco em ***benchmark* real e análise estatística de desempenho**.
 
 Cada algoritmo é executado múltiplas vezes sobre **cópias idênticas dos dados**, garantindo uma comparação **justa, consistente e reprodutível**.
 
@@ -18,12 +18,12 @@ Cada algoritmo é executado múltiplas vezes sobre **cópias idênticas dos dado
 
 ## Algoritmos implementados
 
-- Bubble Sort  
-- Optimized Bubble Sort  
-- Insertion Sort  
-- Selection Sort  
-- Merge Sort  
-- Quick Sort  
+- *Bubble Sort*  
+- *Optimized Bubble Sort*  
+- *Insertion Sort*  
+- *Selection Sort*  
+- *Merge Sort*  
+- *Quick Sort*  
 
 ---
 
@@ -41,7 +41,21 @@ Para cada tamanho de entrada:
 
 ---
 
-## Benchmark
+## Ambiente de execução
+
+Os testes foram executados no meu notebook:
+
+* CPU: AMD Ryzen 7 5825U (8 cores / 16 threads)
+* RAM: 7.2 GiB
+* Sistema: Debian GNU/Linux 12 (Bookworm)
+* Arquitetura: x86-64
+* Armazenamento: SSD
+* Compilador: GCC
+* Flags: `-O2 -Wall -Werror`
+
+Isso é necessário deixar claro, o tempo depende e vária de máquina para máquina.
+
+## *Benchmark*
 
 A medição de tempo é feita com:
 
