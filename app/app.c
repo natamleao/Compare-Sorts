@@ -8,83 +8,92 @@
 #define MAX_TESTS 7
 #define N_ITERATIONS 100
 
+void runTest(FILE *file, const char *name, void (*sort)(float*, int), StructureArray *structure, int length, int isLast);
+
 int main(){ 
 
     int tests[] = {10000, 20000, 50000, 100000, 200000, 500000, 1000000};
 
-    printf("+------------------------------------------------------------------+\n");
-    printf("+------------------------ Testes iniciados ------------------------+\n");
+    FILE *file = fopen("results.csv", "w");
+    if(!file){
+        perror("fopen failed");
+        return 1;
+    }
+
+    fprintf(
+        file, 
+        "length," 
+        "bubble_mean,bubble_std," 
+        "insertion_mean,insertion_std," 
+        "merge_mean,merge_std," 
+        "opbubble_mean,opbubble_std," 
+        "quick_mean,quick_std," 
+        "selection_mean,selection_std\n"
+    );
+
+    printf("+----------------------------------------------------------------------------------------+\n");
+    printf("+----------------------------------- Testes iniciados -----------------------------------+\n");
+
+    srand(time(NULL));
 
     for(int i = 0; i < MAX_TESTS; i++){
-        int size = tests[i];
-        printf("+------------------------------------------------------------------+\n");
-        printf("+ Teste nº: %d | Tamanho da entrada: %d\n", i+1, size);
-        printf("+------------------------------------------------------------------+\n");
-        StructureArray *arrayInsertion = structureArrayCreate(size);
-        StructureArray *arrayBubble = structureArrayCreate(size);
-        StructureArray *arrayOptimizedBubble = structureArrayCreate(size);
-        StructureArray *arraySelection = structureArrayCreate(size);
-        StructureArray *arrayQuick = structureArrayCreate(size);
-        StructureArray *arrayMerge = structureArrayCreate(size);
+        printf("+----------------------------------------------------------------------------------------+\n");
+        printf("+ Teste nº: %d | Tamanho da entrada: %d\n", i+1, tests[i]);
+        printf("+----------------------------------------------------------------------------------------+\n");
+        StructureArray *structureInsertion = structureArrayCreate(tests[i]);
+        StructureArray *structureBubble = structureArrayCreate(tests[i]);
+        StructureArray *structureOptimizedBubble = structureArrayCreate(tests[i]);
+        StructureArray *structureSelection = structureArrayCreate(tests[i]);
+        StructureArray *structureQuick = structureArrayCreate(tests[i]);
+        StructureArray *structureMerge = structureArrayCreate(tests[i]);
 
-        srand(time(NULL));
-        for(int j = 0; j < size; j++){
+        for(int j = 0; j < tests[i]; j++){
             float min = -1e6f;
             float max =  1e6f;
             float value = min + ((float)rand() / RAND_MAX) * (max - min);
-            structureArraySet(arrayOptimizedBubble, j, value);
-            structureArraySet(arrayBubble, j, value);
-            structureArraySet(arrayInsertion, j, value);
-            structureArraySet(arraySelection, j, value);
-            structureArraySet(arrayQuick, j, value);
-            structureArraySet(arrayMerge, j, value);
+            structureArraySet(structureOptimizedBubble, j, value);
+            structureArraySet(structureBubble, j, value);
+            structureArraySet(structureInsertion, j, value);
+            structureArraySet(structureSelection, j, value);
+            structureArraySet(structureQuick, j, value);
+            structureArraySet(structureMerge, j, value);
         }
 
-        double executionTimeBubbleSort = benchmarkExecutionTime(bubbleSort, structureArrayGetData(arrayBubble), size, N_ITERATIONS);
-        printf("+ Bubble Sort - ");
-        //structureArrayPrint(arrayBubble);
-        executionTimePrint(executionTimeBubbleSort);
-        structureArrayDestroy(arrayBubble);
-        printf("+------------------------------------------------------------------+\n");
+        fprintf(file, "%d,", tests[i]);
 
-        double executionTimeInsertionSort = benchmarkExecutionTime(insertionSort, structureArrayGetData(arrayInsertion), size, N_ITERATIONS);
-        printf("+ Insertion Sort - ");
-        //structureArrayPrint(arrayInsertion);
-        executionTimePrint(executionTimeInsertionSort);
-        structureArrayDestroy(arrayInsertion);
-        printf("+------------------------------------------------------------------+\n");
-
-        double executionTimeMergeSort = benchmarkExecutionTime(mergeSort, structureArrayGetData(arrayMerge), size, N_ITERATIONS);
-        printf("+ Merge Sort - ");
-        //structureArrayPrint(arrayMerge);
-        executionTimePrint(executionTimeMergeSort);
-        structureArrayDestroy(arrayMerge);
-        printf("+------------------------------------------------------------------+\n");
-    
-        double executionTimeOptimizedBubbleSort = benchmarkExecutionTime(optimizedBubbleSort, structureArrayGetData(arrayOptimizedBubble), size, N_ITERATIONS);
-        printf("+ Optimized Bubble Sort - ");
-        //structureArrayPrint(arrayOptimizedBubble);
-        executionTimePrint(executionTimeOptimizedBubbleSort);
-        structureArrayDestroy(arrayOptimizedBubble);
-        printf("+------------------------------------------------------------------+\n");
-
-        double executionTimeQuickSort = benchmarkExecutionTime(quickSort, structureArrayGetData(arrayQuick), size, N_ITERATIONS);
-        printf("+ Quick Sort - ");
-        //structureArrayPrint(arrayQuick);
-        executionTimePrint(executionTimeQuickSort);
-        structureArrayDestroy(arrayQuick);
-        printf("+------------------------------------------------------------------+\n");
-
-        double executionTimeSelectionSort = benchmarkExecutionTime(selectionSort, structureArrayGetData(arraySelection), size, N_ITERATIONS);
-        printf("+ Selection Sort - ");
-        //structureArrayPrint(arraySelection);
-        executionTimePrint(executionTimeSelectionSort);
-        structureArrayDestroy(arraySelection);
+        runTest(file, "Bubble Sort", bubbleSort, structureBubble, tests[i], 0);
+        printf("+----------------------------------------------------------------------------------------+\n");
+        runTest(file, "Insertion Sort", insertionSort, structureInsertion, tests[i], 0);
+        printf("+----------------------------------------------------------------------------------------+\n");
+        runTest(file, "Merge Sort", mergeSort, structureMerge, tests[i], 0);
+        printf("+----------------------------------------------------------------------------------------+\n");
+        runTest(file, "Optimized Bubble Sort", optimizedBubbleSort, structureOptimizedBubble, tests[i], 0);
+        printf("+----------------------------------------------------------------------------------------+\n");
+        runTest(file, "Quick Sort", quickSort, structureQuick, tests[i], 0);
+        printf("+----------------------------------------------------------------------------------------+\n");
+        runTest(file, "Selection Sort", selectionSort, structureSelection, tests[i], 1);
     }
 
-    printf("+------------------------------------------------------------------+\n");
-    printf("+----------------------- Testes finalizados -----------------------+\n");
-    printf("+------------------------------------------------------------------+\n");
+    fclose(file);
+
+    printf("+----------------------------------------------------------------------------------------+\n");
+    printf("+---------------------------------- Testes finalizados ----------------------------------+\n");
+    printf("+----------------------------------------------------------------------------------------+\n");
 
     return 0;
+}
+
+void runTest(FILE *file, const char *name, void (*sort)(float*, int), StructureArray *structure, int length, int isLast){
+    Result *r = benchmarkExecutionTime(sort, structureArrayGetData(structure), length, N_ITERATIONS);
+
+    if(isLast)
+        fprintf(file, "%.6f,%.6f\n", resultGetMean(r), resultGetStddev(r));
+    else
+        fprintf(file, "%.6f,%.6f,", resultGetMean(r), resultGetStddev(r));
+
+    printf("+ %s - ", name);
+    executionTimePrint(r);
+
+    structureArrayDestroy(structure);
+    resultDestroy(r);
 }

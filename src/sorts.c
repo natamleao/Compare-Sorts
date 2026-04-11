@@ -4,19 +4,19 @@
 
 /******************************************************* INTERFACE PRIVADA *******************************************************/
 
-void merge(float array[], int begin, int middle, int end){
+void merge(float input_data[], int begin, int middle, int end){
     int cont1 = begin;
     int cont2 = (middle + 1);
     int contAux = 0;
     float *arrAux = malloc((end - begin + 1) * sizeof(float));
 
     while(cont1 <= middle && cont2 <= end){
-        if(array[cont1] <array[cont2]){
-            arrAux[contAux] = array[cont1];
+        if(input_data[cont1] <input_data[cont2]){
+            arrAux[contAux] = input_data[cont1];
             cont1++;
         }
         else{
-            arrAux[contAux] = array[cont2];
+            arrAux[contAux] = input_data[cont2];
             cont2++;
         }
 
@@ -24,30 +24,30 @@ void merge(float array[], int begin, int middle, int end){
     }
 
     while(cont1 <= middle){
-        arrAux[contAux] = array[cont1];
+        arrAux[contAux] = input_data[cont1];
         contAux++;
         cont1++;
     }
 
     while(cont2 <= end){
-        arrAux[contAux] = array[cont2];
+        arrAux[contAux] = input_data[cont2];
         contAux++;
         cont2++;
     }
 
     for(contAux = begin; contAux <= end; contAux++)
-        array[contAux] = arrAux[contAux-begin];
+        input_data[contAux] = arrAux[contAux-begin];
 
     free(arrAux);
 }
 
-void mergeSortRecursive(float array[], int begin, int end){
+void mergeSortRecursive(float input_data[], int begin, int end){
     if(begin < end){
         int middle = (begin + end) / 2;
 
-        mergeSortRecursive(array, begin, middle);
-        mergeSortRecursive(array, middle + 1, end);
-        merge(array, begin, middle, end);
+        mergeSortRecursive(input_data, begin, middle);
+        mergeSortRecursive(input_data, middle + 1, end);
+        merge(input_data, begin, middle, end);
     }
 }
 
@@ -57,97 +57,97 @@ void swap(float *a, float *b){
     *b = c;
 }
 
-int partition(float array[], int low, int high){
-    float pivot = array[high];
+int partition(float input_data[], int low, int high){
+    float pivot = input_data[high];
     int i = (low - 1);
 
     for(int j = low; j < high; j++){
-        if(array[j] <= pivot){
+        if(input_data[j] <= pivot){
             i++;
-            swap(&array[i], &array[j]);
+            swap(&input_data[i], &input_data[j]);
         }
     }
 
-    swap(&array[i+1], &array[high]);
+    swap(&input_data[i+1], &input_data[high]);
 
     return (i + 1);
 }
 
-void quickSortRecursive(float array[], int low, int high){
+void quickSortRecursive(float input_data[], int low, int high){
     if(low < high){
-        int p = partition(array, low, high);
+        int p = partition(input_data, low, high);
 
-        quickSortRecursive(array, low, p - 1);
-        quickSortRecursive(array, p + 1, high);
+        quickSortRecursive(input_data, low, p - 1);
+        quickSortRecursive(input_data, p + 1, high);
     }
 }
 
 /******************************************************* INTERFACE PUBLICA *******************************************************/
 
-void bubbleSort(float *array, int size){
-    for(int i = 0; i < size - 1; i++){
-        for(int j = 0; j < size - 1 - i; j++){
-            if(array[j] > array[j+1]){
-                float aux = array[j];
-                array[j] = array[j+1];
-                array[j+1] = aux;
+void bubbleSort(float *input_data, int length){
+    for(int i = 0; i < length - 1; i++){
+        for(int j = 0; j < length - 1 - i; j++){
+            if(input_data[j] > input_data[j+1]){
+                float aux = input_data[j];
+                input_data[j] = input_data[j+1];
+                input_data[j+1] = aux;
             }
         }
     }
 }
 
-void insertionSort(float *array, int size){
-    for(int i = 1; i < size; i++){
-        float key = array[i];
+void insertionSort(float *input_data, int length){
+    for(int i = 1; i < length; i++){
+        float key = input_data[i];
         int j = i - 1;
 
-        while(j >= 0 && array[j] > key){
-            array[j + 1] = array[j];
+        while(j >= 0 && input_data[j] > key){
+            input_data[j + 1] = input_data[j];
             j--;
         }
 
-        array[j + 1] = key;
+        input_data[j + 1] = key;
     }
 }
 
-void mergeSort(float *array, int size){
-    mergeSortRecursive(array, 0, size - 1);
+void mergeSort(float *input_data, int length){
+    mergeSortRecursive(input_data, 0, length - 1);
 }
 
-void optimizedBubbleSort(float *array, int size){
+void optimizedBubbleSort(float *input_data, int length){
     int ok = 0;
 
-    for(int i = 0; i < size - 1 && ok == 0; i++){
+    for(int i = 0; i < length - 1 && ok == 0; i++){
         ok = 1;
-        for(int j = 0; j < size - 1 - i; j++){
-            if(array[j] > array[j+1]){
+        for(int j = 0; j < length - 1 - i; j++){
+            if(input_data[j] > input_data[j+1]){
                 ok = 0;
-                float aux = array[j];
-                array[j] = array[j+1];
-                array[j+1] = aux;
+                float aux = input_data[j];
+                input_data[j] = input_data[j+1];
+                input_data[j+1] = aux;
             }
         }
     }
 }
 
-void quickSort(float *array, int size){
-    quickSortRecursive(array, 0, size - 1);
+void quickSort(float *input_data, int length){
+    quickSortRecursive(input_data, 0, length - 1);
 }
 
-void selectionSort(float *array, int size){
+void selectionSort(float *input_data, int length){
     int min; 
     float temp;
 
-    for(int i = 0; i < size - 1; i++){
+    for(int i = 0; i < length - 1; i++){
         min = i;
-        for(int j = i + 1; j < size; j++){
-            if(array[j] < array[min])
+        for(int j = i + 1; j < length; j++){
+            if(input_data[j] < input_data[min])
                 min = j;
         }
 
-        temp = array[min];
-        array[min] = array[i];
-        array[i]= temp;
+        temp = input_data[min];
+        input_data[min] = input_data[i];
+        input_data[i]= temp;
     }
 }
 

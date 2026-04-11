@@ -4,8 +4,8 @@ INCLUDE = ./include
 LIBDIR = ./lib
 BUILD = ./build
 SRC = ./src
-FLAGS = -Wall -Werror -fsanitize=address -g
-FLAGGLUT = -lGL -lGLU -lglut
+FLAGS = -O2 -Wall -Werror -fsanitize=address -g
+FLAGGLUT = -lGL -lGLU -lglut -lm
 
 LIB = $(LIBDIR)/libdsa.a
 
@@ -33,6 +33,9 @@ $(BIN)/%: $(APPS)/%.c $(LIB)
 
 run:
 	$(BIN)/app
+
+runperf:
+	perf stat -e cycles,instructions,cache-misses,branch-misses $(BIN)/app
 
 clean:
 	rm -rf $(BIN)/* $(BUILD)/* $(LIBDIR)/*

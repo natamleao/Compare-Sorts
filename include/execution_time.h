@@ -1,35 +1,58 @@
 /******************************************************* INTERFACE PUBLICA *******************************************************/
 
-#ifndef CALCULATE_TIME_H
-#define CALCULATE_TIME_H
+#ifndef EXECUTION_TIME_H
+#define EXECUTION_TIME_H
 
-#include "sorts.h"
+typedef struct _result Result;
+
+/**
+ * @brief Retorna o tempo médio de execução (em nanosegundos).
+ * 
+ * @param res Estrutura com os dados de tempo.
+ */
+double resultGetMean(Result *res);
+
+/**
+ * @brief Retorna o desvio padrão dos tempos (em nanosegundos).
+ * 
+ * @param res Estrutura com os dados de tempo.
+ */
+double resultGetStddev(Result *res);
 
 /**
  * @brief Mede o tempo médio de execução de uma função de ordenação.
  * 
- * @param function Ponteiro para função que recebe (float*, int).
- * @param array Vetor de float que será ordenado.
- * @param size Tamanho do vetor.
- * @param nIterations Número de execuções do algoritmo de ordenação.
+ * @param sort_fn Ponteiro para função que recebe (float*, int).
+ * @param input_data Vetor de float que será ordenado.
+ * @param length Tamanho do vetor.
+ * @param num_runs Número de execuções do algoritmo.
  * 
- * @return Tempo médio de execução em nanosegundos.
+ * @return Estrutura contendo:
+ * - tempo médio (ns)
+ * - desvio padrão (ns)
  * 
- * @details A função executa o algoritmo múltiplas vezes sobre cópias do array original,
- * evitando efeitos colaterais e garantindo uma média mais estável do tempo de execução.
+ * @details Executa o algoritmo múltiplas vezes sobre cópias do array original,
+ * evitando efeitos colaterais e produzindo uma média estatisticamente mais estável.
  * 
- * @note Usa clock_gettime com CLOCK_MONOTONIC (tempo real de alta precisão).
+ * @note Usa clock_gettime com CLOCK_MONOTONIC.
  */
-double benchmarkExecutionTime(void (*function)(float*, int), float *array, int size, int nIterations);
+Result *benchmarkExecutionTime(void (*sort_fn)(float *, int), float *input_data, int length, int num_runs);
 
 /**
- * @brief Imprime o tempo de execução formatado em milissegundos.
+ * @brief Imprime o resultado do benchmark em milissegundos.
  *
- * @param executionTime Tempo total em nanosegundos.
+ * @param res Estrutura com os dados de tempo.
  *
- * @details Converte o tempo de nanosegundos para milissegundos e exibe na saída padrão.
+ * @details Exibe o tempo médio e o desvio padrão convertidos de ns para ms.
  */
-void executionTimePrint(double executionTime);
+void executionTimePrint(Result *res);
+
+/**
+ * @brief Libera a memória associada ao resultado.
+ * 
+ * @param res Estrutura com os dados de tempo.
+ */
+void resultDestroy(Result *res);
 
 #endif
 

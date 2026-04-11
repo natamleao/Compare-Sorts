@@ -6,20 +6,20 @@
 /******************************************************* INTERFACE PRIVADA *******************************************************/
 
 struct _structureArray{
-    float *_data;
-    int _size;
+    float *_input_data;
+    int _length;
 };
 
 /******************************************************* INTERFACE PUBLICA *******************************************************/
 
-StructureArray* structureArrayCreate(int size){
+StructureArray* structureArrayCreate(int length){
     StructureArray *array = (StructureArray*)malloc(sizeof(StructureArray));
     if(!array) return NULL;
 
-    array->_size = size;
+    array->_length = length;
 
-    array->_data = (float*)calloc(size, sizeof(float));
-    if(!array->_data){
+    array->_input_data = calloc(length, sizeof(float));
+    if(!array->_input_data){
         free(array);
         return NULL;
     }
@@ -27,15 +27,15 @@ StructureArray* structureArrayCreate(int size){
     return array;
 }
 
-float* structureArrayGetData(StructureArray *array){return array->_data;}
-int structureArrayGetSize(StructureArray *array){return array->_size;}
+float* structureArrayGetData(StructureArray *structure){return structure->_input_data;}
+int structureArrayGetSize(StructureArray *structure){return structure->_length;}
 
-void structureArraySet(StructureArray *array, int index, float value){array->_data[index] = value;}
-float structureArrayGet(StructureArray *array, int index){return array->_data[index];}
+void structureArraySet(StructureArray *structure, int index, float value){structure->_input_data[index] = value;}
+float structureArrayGet(StructureArray *structure, int index){return structure->_input_data[index];}
 
-void structureArrayPrint(StructureArray *array){
-    float *data = structureArrayGetData(array);
-    int size = structureArrayGetSize(array);
+void structureArrayPrint(StructureArray *structure){
+    float *data = structureArrayGetData(structure);
+    int size = structureArrayGetSize(structure);
 
     printf("["); 
     for(int i = 0; i < size - 1; i++)
@@ -44,10 +44,10 @@ void structureArrayPrint(StructureArray *array){
     printf("%.2f]\n", data[size - 1]);
 }
 
-void structureArrayDestroy(StructureArray *array){
-    if(array){
-        free(array->_data);
-        free(array);
+void structureArrayDestroy(StructureArray *structure){
+    if(structure){
+        free(structure->_input_data);
+        free(structure);
     }
 }
 
