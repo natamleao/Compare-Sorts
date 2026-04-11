@@ -95,11 +95,11 @@ Formato:
 ```csv
 length,
 bubble_mean,bubble_std,
-insertion_mean,insertion_std,
-merge_mean,merge_std,
 opbubble_mean,opbubble_std,
-quick_mean,quick_std,
-selection_mean,selection_std
+insertion_mean,insertion_std,
+selection_mean,selection_std,
+merge_mean,merge_std,
+quick_mean,quick_std
 ```
 
 Exemplo:
