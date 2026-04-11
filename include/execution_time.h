@@ -20,6 +20,13 @@ double resultGetMean(Result *res);
 double resultGetStddev(Result *res);
 
 /**
+ * @brief Retorna o coeficiente de variação (CV) dos tempos (em nanosegundos).
+ * 
+ * @param res Estrutura com os dados de tempo.
+ */
+double resultGetCV(Result *res);
+
+/**
  * @brief Mede o tempo médio de execução de uma função de ordenação.
  * 
  * @param sort_fn Ponteiro para função que recebe (float*, int).

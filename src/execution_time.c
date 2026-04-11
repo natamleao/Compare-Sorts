@@ -10,7 +10,7 @@
 /******************************************************* INTERFACE PRIVADA *******************************************************/
 
 struct _result{
-    double mean, stddev;
+    double mean, stddev, cv;
 };
 
 double elapsed(struct timespec a, struct timespec b){
@@ -85,6 +85,7 @@ double calculateStandardDeviation(double *times, int num_runs, double mean){
 
 double resultGetMean(Result *res){return res->mean;}
 double resultGetStddev(Result *res){return res->stddev;}
+double resultGetCV(Result *res){return res->cv;}
 
 Result *benchmarkExecutionTime(void (*sort_fn)(float *, int), float *input_data, int length, int num_runs){
     float **m = allocMatrix(num_runs, length);
@@ -109,18 +110,14 @@ Result *benchmarkExecutionTime(void (*sort_fn)(float *, int), float *input_data,
 
     res->mean = calculateMean(times, num_runs);
     res->stddev = calculateStandardDeviation(times, num_runs, res->mean);
+    res->cv = res->stddev / res->mean * 100.0;
 
     free(times);
     return res;
 }
 
 void executionTimePrint(Result *res){
-    printf(
-        "Mean: %.6f ms | StdDev: %.6f ms | CV: %.2f%%\n",
-        resultGetMean(res) / 1e6,
-        resultGetStddev(res) / 1e6,
-        (resultGetStddev(res) / resultGetMean(res)) * 100.0
-    );
+    printf("Mean: %.6f ms | StdDev: %.6f ms | CV: %.2f%%\n", resultGetMean(res) / 1e6, resultGetStddev(res) / 1e6, resultGetCV(res));
 }
 
 void resultDestroy(Result *res){
