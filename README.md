@@ -53,7 +53,7 @@ Os testes foram executados no meu notebook:
 * Arquitetura: x86-64
 * Armazenamento: SSD
 * Compilador: GCC
-* Flags: `-O2 -Wall -Werror -fsanitize=address -g`
+* Flags: `-O2 -Wall -Werror -g`
 
 Isso é necessário deixar claro, o tempo depende e vária de máquina para máquina.
 
